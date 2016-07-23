@@ -63,8 +63,18 @@ public class ListSorter<T> {
 	 * @return
 	 */
 	public List<T> mergeSort(List<T> list, Comparator<T> comparator) {
-        // FILL THIS IN!
-        return null;
+        if (list.size() == 1) {
+        	return list;
+        }
+    	List<T> list1 = list.subList(0, list.size() / 2);
+    	List<T> list2 = list.subList(list.size() / 2, list.size());
+    	list1 = mergeSort(list1, comparator);
+    	list2 = mergeSort(list2, comparator);
+    	List<T> finalList = new ArrayList<>();
+    	finalList.addAll(list1);
+    	finalList.addAll(list2);
+    	insertionSort(finalList, comparator);
+        return finalList;
 	}
 
 	/**
@@ -75,7 +85,14 @@ public class ListSorter<T> {
 	 * @return
 	 */
 	public void heapSort(List<T> list, Comparator<T> comparator) {
-        // FILL THIS IN!
+        PriorityQueue<T> pq = new PriorityQueue<>(comparator);
+        for (T item: list) {
+        	pq.offer(item);
+        }
+        list.clear();
+       	while (pq.peek() != null) {
+        	list.add(pq.poll());
+        }
 	}
 
 	
@@ -89,8 +106,20 @@ public class ListSorter<T> {
 	 * @return
 	 */
 	public List<T> topK(int k, List<T> list, Comparator<T> comparator) {
-        // FILL THIS IN!
-        return null;
+        PriorityQueue<T> pq = new PriorityQueue<>(comparator);
+        int x = 0;
+        for (T item: list) {
+        	pq.offer(item);
+        	if (x >= k) {
+        		pq.poll();
+        	}
+        	x++;
+        }
+        List newList = new ArrayList<>();
+       	while (pq.peek() != null) {
+        	newList.add(pq.poll());
+        }
+        return newList;
 	}
 
 	
